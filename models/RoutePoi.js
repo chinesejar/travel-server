@@ -8,11 +8,11 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
     route_id: { // 对应 route 表
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     poi_id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       comment: "点poi"
     },

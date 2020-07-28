@@ -22,12 +22,12 @@ module.exports = (sequelize) => {
       comment: "行程中路线序号"
     },
     start_poi: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       comment: "起点poi"
     },
     end_poi: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       comment: "终点poi"
     },

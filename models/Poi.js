@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      unique: true,
       comment: "点名称"
     },
     type: { // 点类型
@@ -104,12 +105,10 @@ module.exports = (sequelize) => {
     },
     remark: {
       type: DataTypes.TEXT,
-      allowNull: false,
       comment: "点介绍"
     },
     source: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.STRING(10),
       comment: "来源"
     },
     status: { // 状态 0 - 正常 1 - 暂时无效 2 - 回收站
