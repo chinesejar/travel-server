@@ -6,12 +6,12 @@ const routeDto = new RouteDto();
 
 class GuideController {
   static async get(ctx) {
-    const err = createGuideValidator({ username: 'abc', birth_year: 1994 });
-    if (err) ctx.throw(400, err);
     ctx.body = await guideDto.getGuides();
   }
 
   static async post(ctx) {
+    const err = createGuideValidator(ctx.request.body);
+    if (err) ctx.throw(400, err);
     ctx.body = await guideDto.create(ctx.request.body);
   }
 

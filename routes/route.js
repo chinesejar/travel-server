@@ -7,6 +7,7 @@ const router = new Router;
 router.prefix('/v1');
 
 router.get('/user/register', UserController.register);
+router.post('/guide', GuideController.post);
 router.get('/guide', GuideController.get);
 router.get('/guide/:id', GuideController.getOne);
 router.get('/poi', PoiController.get);
