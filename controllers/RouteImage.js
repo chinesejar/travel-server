@@ -6,7 +6,7 @@ const routeImageDto = new RouteImageDto();
 class RouteImageController {
 
   static async post(ctx) {
-    const file = ctx.request.files?.file;
+    const { file } = ctx.request.files;
     if (!file) ctx.throw(400, "没有上传文件");
     const { name, size, type, path } = file;
     const fileStream = fs.createReadStream(path);
