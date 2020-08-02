@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
       unique: true,
       comment: "点名称"
     },
-    type: { // 点类型
+    type: { // 点类型 0 未定义/其他 1 景点 2 餐饮 3 住宿 4 娱乐
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,

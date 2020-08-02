@@ -1,5 +1,6 @@
 const { GuideDto, RouteDto } = require("../services");
 const { createGuideValidator } = require("../validators/Guide");
+const { guideTypes } = require('../utils/types');
 
 const guideDto = new GuideDto();
 const routeDto = new RouteDto();
@@ -22,6 +23,10 @@ class GuideController {
       const routes = await routeDto.getRoutesByGuideId(id);
       ctx.body = { ...guide.dataValues, routes };
     } else ctx.throw(404, "没有数据");
+  }
+
+  static async getTypes(ctx) {
+    ctx.body = guideTypes;
   }
 }
 

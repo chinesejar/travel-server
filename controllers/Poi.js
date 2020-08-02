@@ -1,5 +1,6 @@
 const { PoiDto } = require("../services");
 const { createPoiValidator } = require("../validators/Poi");
+const { poiTypes } = require('../utils/types');
 
 const poiDto = new PoiDto();
 
@@ -20,6 +21,10 @@ class PoiController {
     if (poi) {
       ctx.body = poi;
     } else ctx.throw(404, "没有数据");
+  }
+
+  static async getTypes(ctx) {
+    ctx.body = poiTypes;
   }
 }
 
