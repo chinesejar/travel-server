@@ -1,8 +1,10 @@
 const Koa = require('koa');
 const cors = require('@koa/cors');
+var jwt = require('koa-jwt');
 const koaBody = require('koa-body');
 const logger = require('koa-logger');
 const router = require('./routes/route');
+const pubRoute = require('./routes/pubRoute');
 const minioClient = require('./utils/minio');
 const config = require('./config');
 
@@ -14,6 +16,8 @@ app.use(cors({
   allowHeaders: ['Content-Type', 'X-Requested-With', 'Authorization', 'Accept'],
 }));
 
+app.use(jwt({ secret: 'abcdpoqwerlkjhgsdfbcvnxcvmnh' }).unless({ path: [/^\/auth/] }));
+
 app.use(logger());
 app.use(koaBody({ multipart: true }));
 app.use(async (ctx, next) => {
@@ -21,11 +25,13 @@ app.use(async (ctx, next) => {
     await next();
   } catch (err) {
     ctx.status = err.status || 500;
-    ctx.body = { msg: err.message };
+    ctx.body = { message: err.message };
     ctx.app.emit('error', err, ctx);
   }
 });
 
+app.use(pubRoute.routes());
+app.use(pubRoute.allowedMethods());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

@@ -1,5 +1,4 @@
 const Router = require('@koa/router');
-const UserController = require('../controllers/User');
 const GuideController = require('../controllers/Guide');
 const PoiController = require('../controllers/Poi');
 const RouteImageController = require('../controllers/RouteImage');
@@ -7,7 +6,6 @@ const RouteImageController = require('../controllers/RouteImage');
 const router = new Router;
 router.prefix('/v1');
 
-router.get('/user/register', UserController.register);
 router.post('/guide', GuideController.post);
 router.get('/guide', GuideController.get);
 router.get('/type/guide', GuideController.getTypes);
