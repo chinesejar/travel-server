@@ -13,6 +13,15 @@ class UserDto {
     })
   }
 
+  async getUserByUsernameWithoutPassword(username) {
+    return await User.findOne({
+      where: {
+        username
+      },
+      attributes: ['id', 'username', 'gender']
+    })
+  }
+
   async getUserById(id) {
     return await User.findByPk(id);
   }

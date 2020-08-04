@@ -9,10 +9,11 @@ class PoiImageController {
     const file = ctx.request.files?.file;
     if (!file) ctx.throw(400, "没有上传文件");
     const { name, size, type, path } = file;
+    const { id } = ctx.state;
     const fileStream = fs.createReadStream(path);
     const putPromise = () => {
       return new Promise((res, rej) => {
-        ctx.minio.putObject('poi-image', name, fileStream, size, type, function (e) {
+        ctx.minio.putObject('poi-image', `${id}/${name}`, fileStream, size, type, function (e) {
           if (e) {
             rej(e)
           }
