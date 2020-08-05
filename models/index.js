@@ -26,7 +26,7 @@ sequelize
     console.error("连接失败", err);
   })
 
-sequelize.sync({ force: false, alter: true });
+sequelize.sync({ force: true, alter: true });
 
 module.exports = {
   sequelize, User, Guide,

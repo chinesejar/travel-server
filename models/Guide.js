@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize")
+const { guideStatus, guideTypes } = require("../utils/types")
 
 module.exports = (sequelize) => {
   return sequelize.define('Guide', {
@@ -7,42 +8,32 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    days: {
+    user: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      comment: "所属用户",
+    },
+    days: {
+      type: DataTypes.INTEGER,
       comment: "行程天数",
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
       comment: "攻略描述",
     },
     score: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 0,
       comment: "攻略评分",
     },
-    remark: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      comment: "攻略方案",
-    },
-    type: { // 攻略类型 0 - 生态休闲 1 - 文化古迹 2 - 宗教朝圣
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    type: {
+      type: DataTypes.ENUM(guideTypes),
       comment: "攻略类型",
     },
-    status: { // 状态 0 - 正常 1 - 暂时无效 2 - 回收站
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+    status: {
+      type: DataTypes.ENUM(guideStatus),
+      defaultValue: guideStatus[0],
       comment: "状态",
     },
-    memo: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      comment: "备注",
-    }
   })
 }

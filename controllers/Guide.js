@@ -11,9 +11,8 @@ class GuideController {
   }
 
   static async post(ctx) {
-    const err = createGuideValidator(ctx.request.body);
-    if (err) ctx.throw(400, err);
-    ctx.body = await guideDto.create(ctx.request.body);
+    const { id } = ctx.state;
+    ctx.body = await guideDto.create({ user: id });
   }
 
   static async getOne(ctx) {
