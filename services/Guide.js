@@ -1,8 +1,20 @@
-const { Guide } = require("../models");
+const { Guide, Route, Poi } = require("../models");
 
 class GuideDto {
   async getGuides() {
-    return await Guide.findAll();
+    return await Guide.findAll({
+      include: [{
+        model: Route, include: [{
+          model: Poi
+        }]
+      }]
+    });
+  }
+
+  async getGuide(where) {
+    return await Guide.findOne({
+      where
+    });
   }
 
   async getGuideById(id) {

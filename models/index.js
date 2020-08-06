@@ -3,11 +3,7 @@ const config = require('../config');
 
 const { database } = config;
 
-// const sequelize = new Sequelize(database);
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'travel.sqlite',
-});
+const sequelize = new Sequelize(database);
 
 const User = require('./User')(sequelize);
 const Guide = require('./Guide')(sequelize);
@@ -26,7 +22,10 @@ sequelize
     console.error("连接失败", err);
   })
 
-sequelize.sync({ force: true, alter: true });
+sequelize.sync({ force: false, alter: true });
+
+Guide.hasMany(Route, { foreignKey: 'guide_id' });
+Route.hasMany(Poi, { foreignKey: 'route_id' });
 
 module.exports = {
   sequelize, User, Guide,

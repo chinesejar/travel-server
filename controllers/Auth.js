@@ -7,11 +7,10 @@ const userDto = new UserDto();
 
 class UserController {
   static async login(ctx) {
-    const err = authUserValidator(ctx.request.body);
-    if (err) {
-      ctx.throw(400, err);
-    } else {
-      const { username, password } = ctx.request.body;
+    try {
+      const data = await authUserValidator.validateAsync(ctx.request.body);
+      console.log(data);
+      const { username, password } = data;
       const user = await userDto.getUserByUsername(username);
       if (!user) ctx.throw(404, "用户不存在");
       const cryptPass = crypto.createHash('md5').update(password).digest('hex');
@@ -20,15 +19,15 @@ class UserController {
       ctx.body = {
         token
       }
+    } catch (err) {
+      ctx.throw(400, err);
     }
   }
 
   static async register(ctx) {
-    const err = registerUserValidator(ctx.request.body);
-    if (err) {
-      ctx.throw(400, err);
-    } else {
-      const { username, password } = ctx.request.body;
+    try {
+      const data = await registerUserValidator.validateAsync(ctx.request.body);
+      const { username, password } = data;
       let user = await userDto.getUserByUsername(username);
       if (user) ctx.throw(400, "用户已注册");
       const cryptPass = crypto.createHash('md5').update(password).digest('hex');
@@ -37,6 +36,8 @@ class UserController {
       ctx.body = {
         token
       }
+    } catch (err) {
+      ctx.throw(400, err);
     }
   }
 }

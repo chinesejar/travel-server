@@ -7,6 +7,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^9.3.1",
     "crypto": "^1.0.1",
@@ -18,7 +19,6 @@
     "minio": "^7.0.16",
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.3",
-    "sqlite3": "^5.0.0",
-    "validator": "^13.1.1"
+    "sqlite3": "^5.0.0"
   }
 }

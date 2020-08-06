@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize")
-const { guideStatus, guideTypes } = require("../utils/types")
+const { guideStatus } = require("../utils/types")
 
 module.exports = (sequelize) => {
   return sequelize.define('Guide', {
@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       comment: "所属用户",
+    },
+    title: {
+      type: DataTypes.TEXT,
+      comment: "攻略标题",
     },
     days: {
       type: DataTypes.INTEGER,
@@ -27,12 +31,11 @@ module.exports = (sequelize) => {
       comment: "攻略评分",
     },
     type: {
-      type: DataTypes.ENUM(guideTypes),
+      type: DataTypes.INTEGER,
       comment: "攻略类型",
     },
     status: {
-      type: DataTypes.ENUM(guideStatus),
-      defaultValue: guideStatus[0],
+      type: DataTypes.INTEGER,
       comment: "状态",
     },
   })

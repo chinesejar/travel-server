@@ -10,9 +10,12 @@ class PoiController {
   }
 
   static async post(ctx) {
-    const err = createPoiValidator(ctx.request.body);
-    if (err) ctx.throw(400, err);
-    else ctx.body = await poiDto.create(ctx.request.body);
+    try {
+      const data = await createPoiValidator.validateAsync(ctx.request.body);
+      ctx.body = await poiDto.create(data);
+    } catch (err) {
+      ctx.throw(400, err);
+    }
   }
 
   static async getOne(ctx) {

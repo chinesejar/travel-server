@@ -8,8 +8,20 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
     guide_id: { // 对应 guide 表
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    user_id: { // 对应 user 表
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    title: {
+      type: DataTypes.TEXT,
+      comment: "攻略标题",
+    },
+    description: {
+      type: DataTypes.TEXT,
+      comment: "攻略描述",
     },
     day: {
       type: DataTypes.INTEGER,
@@ -31,15 +43,9 @@ module.exports = (sequelize) => {
       allowNull: false,
       comment: "终点poi"
     },
-    route: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      comment: "路线polyline"
+    geometry: {
+      type: DataTypes.GEOMETRY("LINESTRING"),
+      comment: "路线 polyline"
     },
-    memo: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      comment: "备注"
-    }
   })
 }

@@ -12,6 +12,7 @@ router.post('/guide', GuideController.post);
 router.get('/guide', GuideController.get);
 router.get('/type/guide', GuideController.getTypes);
 router.get('/guide/:id', GuideController.getOne);
+router.put('/guide/:id', GuideController.put);
 router.get('/poi', PoiController.get);
 router.post('/poi', PoiController.post);
 router.get('/poi/:id', PoiController.getOne);

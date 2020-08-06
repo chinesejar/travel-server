@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     gender: { // 性别 0 未知 1 男 2 女
-      type: DataTypes.ENUM([0, 1, 2]),
+      type: DataTypes.INTEGER,
       default: 0,
     },
   })

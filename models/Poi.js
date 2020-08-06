@@ -75,13 +75,9 @@ module.exports = (sequelize) => {
       allowNull: true,
       comment: "村镇"
     },
-    lng: {
-      type: DataTypes.DOUBLE,
-      comment: "经度"
-    },
-    lat: {
-      type: DataTypes.DOUBLE,
-      comment: "纬度"
+    geometry: {
+      type: DataTypes.GEOMETRY("POINT"),
+      comment: "坐标"
     },
     elevation: {
       type: DataTypes.DOUBLE,
@@ -103,10 +99,6 @@ module.exports = (sequelize) => {
       defaultValue: 0,
       comment: "评分"
     },
-    remark: {
-      type: DataTypes.TEXT,
-      comment: "点介绍"
-    },
     source: {
       type: DataTypes.STRING(10),
       comment: "来源"
@@ -117,10 +109,5 @@ module.exports = (sequelize) => {
       defaultValue: 0,
       comment: "状态"
     },
-    memo: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      comment: "备注"
-    }
   })
 }
