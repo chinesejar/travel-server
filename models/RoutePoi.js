@@ -19,11 +19,6 @@ module.exports = (sequelize) => {
     description: {
       type: DataTypes.TEXT,
       comment: "描述"
-    },
-    memo: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      comment: "备注"
     }
   })
 }

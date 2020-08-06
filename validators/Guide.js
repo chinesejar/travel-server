@@ -15,7 +15,10 @@ const putGuideValidator = Joi.object({
     day: Joi.number().min(1),
     start_poi: Joi.number().min(1),
     end_poi: Joi.number().min(1),
+    geometry: Joi.string().allow(null),
     description: Joi.string(),
+    createdAt: Joi.date(),
+    updatedAt: Joi.date(),
     pois: Joi.array().items({
       id: Joi.number().min(1),
       type: Joi.number().min(0).max(poiTypes.length - 1),

@@ -4,9 +4,7 @@ class GuideDto {
   async getGuides() {
     return await Guide.findAll({
       include: [{
-        model: Route, include: [{
-          model: Poi
-        }]
+        model: Route, as: 'routes', include: ['pois']
       }]
     });
   }
