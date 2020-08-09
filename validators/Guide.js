@@ -1,11 +1,13 @@
-const Joi = require('@hapi/joi');
-const { guideTypes, poiTypes } = require('../utils/types');
+const Joi = require("@hapi/joi");
+const { guideTypes, poiTypes } = require("../utils/types");
 
 const putGuideValidator = Joi.object({
   title: Joi.string(),
   days: Joi.number(),
   description: Joi.string(),
-  type: Joi.number().min(0).max(guideTypes.length - 1),
+  type: Joi.number()
+    .min(0)
+    .max(guideTypes.length - 1),
   routes: Joi.array().items({
     id: Joi.number().min(1),
     guide_id: Joi.number().min(1),
@@ -21,13 +23,15 @@ const putGuideValidator = Joi.object({
     updatedAt: Joi.date(),
     pois: Joi.array().items({
       id: Joi.number().min(1),
-      type: Joi.number().min(0).max(poiTypes.length - 1),
+      route_id: Joi.number().min(1),
+      poi_id: Joi.number().min(1),
       description: Joi.string(),
-      poi: Joi.number().min(1)
-    })
-  })
-})
+      createdAt: Joi.date(),
+      updatedAt: Joi.date(),
+    }),
+  }),
+});
 
 module.exports = {
-  putGuideValidator
-}
+  putGuideValidator,
+};

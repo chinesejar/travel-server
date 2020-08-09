@@ -1,7 +1,7 @@
 module.exports = {
   database: 'travel',
   username: 'root',
-  password: '12345678',
+  password: '',
   dialect: 'mysql',
   host: 'localhost',
   port: 3306,

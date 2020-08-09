@@ -1,6 +1,6 @@
 const { GuideDto, RouteDto, RoutePoiDto } = require("../services");
 const { putGuideValidator } = require("../validators/Guide");
-const { guideTypes } = require('../utils/types');
+const { guideTypes } = require("../utils/types");
 
 const guideDto = new GuideDto();
 const routeDto = new RouteDto();
@@ -28,7 +28,16 @@ class GuideController {
         }
         guide.save();
         for (let i = 0; i < data.routes.length; i++) {
-          const { id, title, description, day, start_poi, end_poi, geometry, pois } = data.routes[i];
+          const {
+            id,
+            title,
+            description,
+            day,
+            start_poi,
+            end_poi,
+            geometry,
+            pois,
+          } = data.routes[i];
           var route;
           if (id) {
             route = await routeDto.getRouteById(id);
@@ -43,13 +52,28 @@ class GuideController {
             route.save();
           } else {
             route = await routeDto.create({
-              title, description, day, start_poi, end_poi, index: i, user_id: user, guide_id: guide.id
+              title,
+              description,
+              day,
+              start_poi,
+              end_poi,
+              index: i,
+              user_id: user,
+              guide_id: guide.id,
             });
           }
-          for (const { id, description } of pois) {
-            await routePoiDto.create({
-              route_id: route.id, poi_id: id, description
-            })
+          for (const { poi_id, id, description } of pois) {
+            if (poi_id) {
+              const routePoi = await routePoiDto.getRoutePoiById(id);
+              routePoi.poi_id = poi_id;
+              routePoi.description = description;
+            } else {
+              await routePoiDto.create({
+                route_id: route.id,
+                poi_id: id,
+                description,
+              });
+            }
           }
         }
         ctx.body = guide;
