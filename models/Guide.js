@@ -1,14 +1,14 @@
-const { DataTypes } = require("sequelize")
-const { guideStatus } = require("../utils/types")
+const { DataTypes } = require("sequelize");
+const { guideStatus } = require("../utils/types");
 
 module.exports = (sequelize) => {
-  return sequelize.define('Guide', {
+  return sequelize.define("Guide", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    user: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       comment: "所属用户",
@@ -38,5 +38,5 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       comment: "状态",
     },
-  })
-}
+  });
+};

@@ -1,20 +1,27 @@
-const { DataTypes } = require("sequelize")
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  return sequelize.define('RouteImage', {
+  return sequelize.define("RouteImage", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    guide_id: { // 对应 guide 表
-      type: DataTypes.UUID,
+    route_id: {
+      // 对应 route 表
+      type: DataTypes.INTEGER,
       allowNull: false,
+      comment: "所属路线",
     },
-    image: {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      comment: "所属用户",
+    },
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
-      comment: "图片地址"
+      comment: "图片名称",
     },
-  })
-}
+  });
+};

@@ -1,15 +1,23 @@
-const { Route } = require("../models");
+const { Route, RoutePoi, RouteImage } = require("../models");
 
 class RouteDto {
-  async getRoute() {
-    return await Route.findAll();
+  async getRoute(where) {
+    return await Route.findOne({
+      where,
+      include: [
+        { model: RoutePoi, as: "pois", include: ["images"] },
+        { model: RouteImage, as: "images" },
+      ],
+    });
   }
 
-  async getRoutesByGuideId(id) {
+  async getRoutes(where) {
     return await Route.findAll({
-      where: {
-        guide_id: id
-      }
+      where,
+      include: [
+        { model: RoutePoi, as: "pois", include: ["images"] },
+        { model: RouteImage, as: "images" },
+      ],
     });
   }
 

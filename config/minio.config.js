@@ -1,6 +1,9 @@
+const endPoint = "127.0.0.1";
+//const endPoint = 'travel-storage.timeroute.cn';
+
 module.exports = {
-  endPoint: process.env.NODE_ENV === 'development' ? '127.0.0.1' : 'travel-storage.timeroute.cn',
+  endPoint,
   port: 9000,
-  accessKey: 'minioadmin',
-  secretKey: 'minioadmin'
-}
+  accessKey: "minioadmin",
+  secretKey: "minioadmin",
+};

@@ -1,29 +1,41 @@
-const fs = require('fs');
+const fs = require("fs");
 const { PoiImageDto } = require("../services");
 
 const poiImageDto = new PoiImageDto();
 
 class PoiImageController {
-
   static async post(ctx) {
     const file = ctx.request.files?.file;
     if (!file) ctx.throw(400, "没有上传文件");
     const { name, size, type, path } = file;
-    const { id } = ctx.state;
+    const user_id = ctx.state.id;
+    const { route_poi_id } = ctx.request.body;
     const fileStream = fs.createReadStream(path);
     const putPromise = () => {
       return new Promise((res, rej) => {
-        ctx.minio.putObject('poi-image', `${id}/${name}`, fileStream, size, type, function (e) {
-          if (e) {
-            rej(e)
+        ctx.minio.putObject(
+          "poi-image",
+          `${user_id}/${name}`,
+          fileStream,
+          size,
+          type,
+          function (e) {
+            if (e) {
+              rej(e);
+            }
+            res("上传成功");
           }
-          res("上传成功");
-        })
-      })
-    }
+        );
+      });
+    };
     try {
       const res = await putPromise();
-      ctx.body = res;
+      const poiImage = poiImageDto.create({
+        route_poi_id,
+        user_id,
+        name: `${user_id}/${name}`,
+      });
+      ctx.body = poiImage;
     } catch (err) {
       ctx.throw(400, err);
     }

@@ -48,6 +48,8 @@ sequelize.sync({ force: false, alter: true });
 
 Guide.hasMany(Route, { foreignKey: "guide_id", as: "routes" });
 Route.hasMany(RoutePoi, { foreignKey: "route_id", as: "pois" });
+Route.hasMany(RouteImage, { foreignKey: "route_id", as: "images" });
+RoutePoi.hasMany(PoiImage, { foreignKey: "route_poi_id", as: "images" });
 
 module.exports = {
   sequelize,

@@ -1,8 +1,8 @@
 const { Poi } = require("../models");
 
 class PoiDto {
-  async getPois() {
-    return await Poi.findAll();
+  async getPois(where) {
+    return await Poi.findAll({ where });
   }
 
   async getPoiById(id) {

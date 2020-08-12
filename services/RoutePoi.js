@@ -1,16 +1,12 @@
 const { RoutePoi } = require("../models");
 
 class RoutePoiDto {
-  async getRoutePois() {
-    return await RoutePoi.findAll();
+  async getRoutePois(where) {
+    return await RoutePoi.findAll({ where });
   }
 
-  async getRoutePoiByRouteId(id) {
-    return await RoutePoi.findAll({
-      where: {
-        guide_id: id
-      }
-    });
+  async getRoutePoi(where) {
+    return await RoutePoi.findOne({ where });
   }
 
   async getRoutePoiById(id) {
