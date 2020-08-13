@@ -52,6 +52,13 @@ class RouteImageController {
       ctx.body = route;
     } else ctx.throw(404, "没有数据");
   }
+
+  static async delete(ctx) {
+    const user_id = ctx.state.id;
+    const { id } = ctx.params;
+    await routeImageDto.remove({ id, user_id });
+    ctx.body = { message: "删除成功" };
+  }
 }
 
 module.exports = RouteImageController;

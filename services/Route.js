@@ -28,6 +28,10 @@ class RouteDto {
   async create(route) {
     return await Route.create(route);
   }
+
+  async remove(where) {
+    return await Route.destroy({ where });
+  }
 }
 
 module.exports = RouteDto;

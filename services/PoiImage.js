@@ -8,8 +8,8 @@ class PoiImageDto {
   async getPoiImagesByGuideId(id) {
     return await PoiImage.findAll({
       where: {
-        guide_id: id
-      }
+        guide_id: id,
+      },
     });
   }
 
@@ -19,6 +19,10 @@ class PoiImageDto {
 
   async create(data) {
     return await PoiImage.create(data);
+  }
+
+  async remove(where) {
+    return await PoiImage.destroy({ where });
   }
 }
 

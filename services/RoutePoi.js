@@ -16,6 +16,10 @@ class RoutePoiDto {
   async create(data) {
     return await RoutePoi.create(data);
   }
+
+  async remove(where) {
+    return await RoutePoi.destroy({ where });
+  }
 }
 
 module.exports = RoutePoiDto;

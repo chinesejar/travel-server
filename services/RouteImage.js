@@ -8,8 +8,8 @@ class RouteImageDto {
   async getRouteImagesByGuideId(id) {
     return await RouteImage.findAll({
       where: {
-        guide_id: id
-      }
+        guide_id: id,
+      },
     });
   }
 
@@ -19,6 +19,10 @@ class RouteImageDto {
 
   async create(data) {
     return await RouteImage.create(data);
+  }
+
+  async remove(where) {
+    return await RouteImage.destroy({ where });
   }
 }
 

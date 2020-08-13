@@ -44,6 +44,13 @@ class GuideController {
   static async getTypes(ctx) {
     ctx.body = guideTypes;
   }
+
+  static async delete(ctx) {
+    const user_id = ctx.state.id;
+    const { id } = ctx.params;
+    await guideDto.remove({ id, user_id });
+    ctx.body = { message: "删除成功" };
+  }
 }
 
 module.exports = GuideController;
