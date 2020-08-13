@@ -5,7 +5,7 @@ const poiImageDto = new PoiImageDto();
 
 class PoiImageController {
   static async post(ctx) {
-    const file = ctx.request.files?.file;
+    const file = ctx.request.files.file;
     if (!file) ctx.throw(400, "没有上传文件");
     const { name, size, type, path } = file;
     const user_id = ctx.state.id;
