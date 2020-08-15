@@ -6,7 +6,8 @@ const guideDto = new GuideDto();
 
 class GuideController {
   static async get(ctx) {
-    ctx.body = await guideDto.getGuides();
+    const user_id = ctx.state.id;
+    ctx.body = await guideDto.getGuides({ user_id });
   }
 
   static async post(ctx) {

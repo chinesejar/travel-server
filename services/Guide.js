@@ -1,8 +1,9 @@
 const { Guide, Route, Poi } = require("../models");
 
 class GuideDto {
-  async getGuides() {
+  async getGuides(where) {
     return await Guide.findAll({
+      where,
       include: [
         {
           model: Route,
