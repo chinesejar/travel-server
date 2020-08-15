@@ -1,39 +1,21 @@
-const fs = require("fs");
-const { PoiImageDto } = require("../services");
+const { PoiImageDto, StorageDto } = require("../services");
 
 const poiImageDto = new PoiImageDto();
+const storageDto = new StorageDto();
 
 class PoiImageController {
   static async post(ctx) {
     const file = ctx.request.files.file;
     if (!file) ctx.throw(400, "没有上传文件");
-    const { name, size, type, path } = file;
-    const user_id = ctx.state.id;
-    const { route_poi_id } = ctx.request.body;
-    const fileStream = fs.createReadStream(path);
-    const putPromise = () => {
-      return new Promise((res, rej) => {
-        ctx.minio.putObject(
-          "poi-image",
-          `${user_id}/${name}`,
-          fileStream,
-          size,
-          type,
-          function (e) {
-            if (e) {
-              rej(e);
-            }
-            res("上传成功");
-          }
-        );
-      });
-    };
     try {
-      const res = await putPromise();
+      const user_id = ctx.state.id;
+      const { route_poi_id } = ctx.request.body;
+      const { name } = file;
+      await storageDto.put(ctx.minio, "poi-image", file, user_id, route_poi_id);
       const poiImage = poiImageDto.create({
         route_poi_id,
         user_id,
-        name: `${user_id}/${name}`,
+        name: `${user_id}/${route_poi_id}/${name}`,
       });
       ctx.body = poiImage;
     } catch (err) {
@@ -55,9 +37,15 @@ class PoiImageController {
 
   static async delete(ctx) {
     const user_id = ctx.state.id;
-    const { id } = ctx.params;
-    await poiImageDto.remove({ id, user_id });
-    ctx.body = { message: "删除成功" };
+    const { name, id } = ctx.request.body;
+    try {
+      await storageDto.delete(ctx.minio, "poi-image", name);
+      await poiImageDto.remove({ route_poi_id: id, name, user_id });
+      ctx.body = { message: "删除成功" };
+    } catch (err) {
+      console.log(err);
+      ctx.throw(400, err);
+    }
   }
 }
 

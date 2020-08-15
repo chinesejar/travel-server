@@ -1,7 +1,7 @@
-const fs = require("fs");
-const { RouteImageDto } = require("../services");
+const { RouteImageDto, StorageDto } = require("../services");
 
 const routeImageDto = new RouteImageDto();
+const storageDto = new StorageDto();
 
 class RouteImageController {
   static async post(ctx) {
@@ -9,31 +9,13 @@ class RouteImageController {
     if (!file) ctx.throw(400, "没有上传文件");
     const user_id = ctx.state.id;
     const { route_id } = ctx.request.body;
-    const { name, size, type, path } = file;
-    const fileStream = fs.createReadStream(path);
-    const putPromise = () => {
-      return new Promise((res, rej) => {
-        ctx.minio.putObject(
-          "route-image",
-          `${user_id}/${name}`,
-          fileStream,
-          size,
-          type,
-          function (e) {
-            if (e) {
-              rej(e);
-            }
-            res("上传成功");
-          }
-        );
-      });
-    };
+    const { name } = file;
     try {
-      const res = await putPromise();
+      await storageDto.put(ctx.minio, "route-image", file, user_id, route_id);
       const routeImage = routeImageDto.create({
         route_id,
         user_id,
-        name: `${user_id}/${name}`,
+        name: `${user_id}/${route_id}/${name}`,
       });
       ctx.body = routeImage;
     } catch (err) {
@@ -55,9 +37,14 @@ class RouteImageController {
 
   static async delete(ctx) {
     const user_id = ctx.state.id;
-    const { id } = ctx.params;
-    await routeImageDto.remove({ id, user_id });
-    ctx.body = { message: "删除成功" };
+    const { name, id } = ctx.request.body;
+    try {
+      await storageDto.delete(ctx.minio, "route-image", name);
+      await routeImageDto.remove({ route_id: id, name, user_id });
+      ctx.body = { message: "删除成功" };
+    } catch (err) {
+      ctx.throw(400, err);
+    }
   }
 }
 
